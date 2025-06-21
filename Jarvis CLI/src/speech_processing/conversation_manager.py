@@ -19,7 +19,7 @@ class ConversationManager:
         while True:
             await get_transcript(handle_full_sentence)
 
-            if "goodbye" in self.transcription_response.lower():
+            if "deactivate" in self.transcription_response.lower():
                 self.tts.speak("Powering down. Goodbye, sir.")
                 break
 

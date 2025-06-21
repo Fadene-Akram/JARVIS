@@ -17,14 +17,14 @@ Jarvis is a powerful AI Voice Assistant that seamlessly combines **Speech-to-Tex
 
 ## 🧰 Built-in Tools
 
-| Tool | Description |
-|------|-------------|
-| **CalendarTool** | Schedule events in Google Calendar with a title, date/time, and optional description. |
-| **AddContactTool** | Add contacts to Google Contacts using a name, phone number, and optional email. |
-| **FetchContactTool** | Retrieve contact info by searching your Google Contacts. |
-| **EmailingTool** | Compose and send emails using Gmail by providing recipient, subject, and body. |
-| **SearchWebTool** | Get instant results from the web using voice queries. |
-| **KnowledgeBaseTool** | Access your saved notes and documents from the `/files` folder. |
+| Tool                  | Description                                                                           |
+| --------------------- | ------------------------------------------------------------------------------------- |
+| **CalendarTool**      | Schedule events in Google Calendar with a title, date/time, and optional description. |
+| **AddContactTool**    | Add contacts to Google Contacts using a name, phone number, and optional email.       |
+| **FetchContactTool**  | Retrieve contact info by searching your Google Contacts.                              |
+| **EmailingTool**      | Compose and send emails using Gmail by providing recipient, subject, and body.        |
+| **SearchWebTool**     | Get instant results from the web using voice queries.                                 |
+| **KnowledgeBaseTool** | Access your saved notes and documents from the `/files` folder.                       |
 
 ---
 
@@ -90,9 +90,10 @@ Follow Google's official guides to enable and configure Calendar, Contacts, and 
 python main.py
 ```
 
-Jarvis will end the session when you say “Power down, Jarvis.”
+Jarvis will end the session when you say “Deactivate”
 
 ## 🗣️ Example Commands
+
 - "Schedule a meeting with John for tomorrow at 2 PM."
 - "Add a new contact: Jane Doe, phone number 555-1234."
 - "What's Mary's email address?"
@@ -101,6 +102,7 @@ Jarvis will end the session when you say “Power down, Jarvis.”
 - "What was the recipe I saved last week for chocolate chip cookies?"
 
 ## 🤝 Contributing
+
 We welcome contributions!
 Please submit pull requests or open issues to suggest improvements, fix bugs, or add features.
 If you have any questions or suggestions, feel free to contact me at `fadeneakram@gmail.com`.
