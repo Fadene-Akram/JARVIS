@@ -1,74 +1,70 @@
-# AI Voice Assistant: Your Intelligent Conversational Companion
+# 🤖 Jarvis — Your AI Voice Assistant Inspired by Iron Man
 
-**Transform your digital interactions with your own AI Voice Assistant🎙️🤖**
+**Bring your own J.A.R.V.I.S. to life and enhance your digital workflow with natural voice interaction.**
 
-This project is an advanced AI Voice Assistant that integrates Text-to-Speech (TTS) and Speech-to-Text (STT) capabilities, allowing users to communicate directly with the agent and receive vocal responses. The assistant can utilize various tools to fulfill user requests, including managing calendars, contacts, emails, and performing web searches.
+Jarvis is a powerful AI Voice Assistant that seamlessly combines **Speech-to-Text (STT)** and **Text-to-Speech (TTS)** capabilities. Engage in smooth, human-like conversations while Jarvis helps you manage tasks like scheduling, emailing, searching the web, and accessing your personal knowledge—just like Tony Stark’s iconic assistant.
 
-## Features
+---
 
-- **Speech-to-Text (STT)**: Convert spoken language into written text.
+## 🚀 Key Features
 
-- **Text-to-Speech (TTS)**: Generate vocal responses from text input.
+- **Speech-to-Text (STT)**: Converts spoken input into written text.
+- **Text-to-Speech (TTS)**: Responds to you with realistic synthesized speech.
+- **Voice-Based Interaction**: Communicate naturally, hands-free.
+- **Integrated Tools**: Automates everyday tasks like calendars, contacts, emails, and searches—just say the word.
 
-- **Vocal Interaction**: Engage in natural conversations with the AI assistant.
+---
 
-- **Tool Integration**: Utilize built-in tools for calendar management, contact handling, email composition, web searching, and personal knowledge base access.
+## 🧰 Built-in Tools
 
-### Available Tools
+| Tool | Description |
+|------|-------------|
+| **CalendarTool** | Schedule events in Google Calendar with a title, date/time, and optional description. |
+| **AddContactTool** | Add contacts to Google Contacts using a name, phone number, and optional email. |
+| **FetchContactTool** | Retrieve contact info by searching your Google Contacts. |
+| **EmailingTool** | Compose and send emails using Gmail by providing recipient, subject, and body. |
+| **SearchWebTool** | Get instant results from the web using voice queries. |
+| **KnowledgeBaseTool** | Access your saved notes and documents from the `/files` folder. |
 
-- **CalendarTool**: Book events on Google Calendar with event name, date/time, and optional description.
+---
 
-- **AddContactTool**: Add new contacts to Google Contacts with name, phone number, and optional email address.
+## ⚙️ Getting Started
 
-- **FetchContactTool**: Retrieve contact information from Google Contacts by searching with the contact's name.
-
-- **EmailingTool**: Send emails via Gmail by providing recipient name, subject, and body content.
-
-- **SearchWebTool**: Perform web searches to gather up-to-date information.
-
-- **KnowledgeBaseTool**: Access the user's personal notes and saved information from your custom knowledge base (all the documents included in the `/files` folder)
-
-## How to Run
-
-### Prerequisites
+### 📋 Requirements
 
 - Python 3.9+
+- Google API credentials (Calendar, Contacts, Gmail)
+- Tavily API key (for web searches)
+- Groq API key (for LLaMA 3 model)
+- Google Gemini API key (optional model support)
+- Deepgram API key (for speech processing)
+- Required Python libraries (`requirements.txt`)
 
-- Google API credentials (for Calendar, Contacts, and Gmail access)
+---
 
-- Tavily API key (for web search)
-
-- Groq API key (for Llama3)
-
-- Google Gemini API key (for using the Gemini model)
-
-- Deepgram API key (for voice processing)
-
-- Necessary Python libraries (listed in `requirements.txt`)
-
-### Setup
+### 🛠️ Installation
 
 1. **Clone the repository:**
 
-```sh
-git clone https://github.com/yourusername/AI-Voice-assistant.git
-cd AI-Voice-assistant
+```bash
+git clone https://github.com/yourusername/Jarvis-AI-Assistant.git
+cd Jarvis-AI-Assistant
 ```
 
-2. **Create and activate a virtual environment:**
+2. **Set up a virtual environment:**
 
 ```sh
 python -m venv venv
-source venv/bin/activate # On Windows use `venv\Scripts\activate`
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-3. **Install the required packages:**
+3. **Install dependencies:**
 
 ```sh
 pip install -r requirements.txt
 ```
 
-4. **Set up environment variables:**
+4. **Add environment variables:**
 
 Create a `.env` file in the root directory of the project and add your API keys:
 
@@ -78,24 +74,25 @@ DEEPGRAM_API_KEY=your_deepgram_api_key
 TAVILY_API_KEY=your_tavily_api_key
 GEMINI_API_KEY=your_gemini_api_key
 GROQ_API_KEY=your_groq_api_key
+GMAIL_MAIL=your_email_address
+GMAIL_APP_PASSWORD=your_gmail_app_password
 ```
 
-5. **Configure Google API credentials:**
+5. **Set up Google APIs:**
 
-Follow Google's documentation to set up credentials for Calendar, Contacts, and Gmail APIs. Save the credentials file in a secure location and update the path in the configuration file.
+Follow Google's official guides to enable and configure Calendar, Contacts, and Gmail API access. Store your credentials file safely and link it properly in the project configuration.
 
-### Running the Application
+### ▶️ Run Jarvis
 
-1. **Start a conversation with the assistant:**
+1. **Launch the assistant:**
 
 ```sh
 python main.py
 ```
 
-The assistant is programmed to stop the conversation when the user says "goodbye".
+Jarvis will end the session when you say “Power down, Jarvis.”
 
-## Usage Examples
-
+## 🗣️ Example Commands
 - "Schedule a meeting with John for tomorrow at 2 PM."
 - "Add a new contact: Jane Doe, phone number 555-1234."
 - "What's Mary's email address?"
@@ -103,10 +100,7 @@ The assistant is programmed to stop the conversation when the user says "goodbye
 - "Search the web for recent news about artificial intelligence."
 - "What was the recipe I saved last week for chocolate chip cookies?"
 
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request for any changes.
-
-## Contact
-
-If you have any questions or suggestions, feel free to contact me at `aymenMir1001@gmail.com`.
+## 🤝 Contributing
+We welcome contributions!
+Please submit pull requests or open issues to suggest improvements, fix bugs, or add features.
+If you have any questions or suggestions, feel free to contact me at `fadeneakram@gmail.com`.
