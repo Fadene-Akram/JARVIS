@@ -1,0 +1,504 @@
+.jarvis-wrapper {
+  min-height: 100vh;
+  background-color: black;
+  color: hsl(180, 100%, 90%);
+  overflow: hidden;
+  position: relative;
+  font-family: sans-serif;
+}
+
+.jarvis-grid-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: 0;
+}
+
+.jarvis-container {
+  position: relative;
+  z-index: 10;
+  height: 100vh;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.jarvis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.jarvis-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.jarvis-logo-container {
+  position: relative;
+}
+
+.jarvis-logo-circle {
+  width: 3rem;
+  height: 3rem;
+  background-color: rgba(6, 182, 212, 0.2);
+  border: 2px solid hsl(180, 100%, 60%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jarvis-logo-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: hsl(180, 100%, 60%);
+}
+
+.jarvis-logo-ring {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.jarvis-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: hsl(180, 100%, 60%);
+}
+
+.jarvis-subtitle {
+  font-size: 0.875rem;
+  color: rgba(153, 246, 228, 0.7);
+}
+
+.jarvis-chat-card {
+  flex: 1;
+  background-color: rgba(0, 51, 51, 0.2);
+  border: 1px solid rgba(153, 246, 228, 0.3);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  max-height: 75%;
+}
+
+.jarvis-controls {
+  border-top: 1px solid rgba(153, 246, 228, 0.3);
+  padding-top: 1.5rem;
+}
+
+.jarvis-controls-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jarvis-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.jarvis-mic-button {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 9999px;
+  background-color: hsl(180, 100%, 40%);
+  color: white;
+  border: none;
+  transition: background-color 0.2s;
+}
+.jarvis-mic-button:hover {
+  background-color: hsl(180, 100%, 50%);
+}
+.jarvis-mic-button.jarvis-active {
+  background-color: hsl(0, 84%, 60%);
+}
+.jarvis-mic-button.jarvis-active:hover {
+  background-color: hsl(0, 84%, 70%);
+}
+
+.jarvis-speak-button {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 9999px;
+  background-color: transparent;
+  border: 1px solid hsl(180, 100%, 60%);
+  color: hsl(180, 100%, 60%);
+  transition: background-color 0.2s;
+}
+.jarvis-speak-button:hover {
+  background-color: rgba(0, 51, 51, 0.5);
+}
+.jarvis-speak-button.jarvis-speaking {
+  background-color: hsl(180, 100%, 40%);
+  color: white;
+}
+
+.jarvis-visualizer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.jarvis-status {
+  text-align: right;
+}
+.jarvis-status-main {
+  font-size: 0.875rem;
+  color: hsl(180, 100%, 80%);
+}
+.jarvis-status-sub {
+  font-size: 0.75rem;
+  color: rgba(153, 246, 228, 0.5);
+}
+
+.jarvis-glow {
+  position: absolute;
+  width: 24rem;
+  height: 24rem;
+  border-radius: 50%;
+  filter: blur(64px);
+  z-index: 0;
+}
+.jarvis-glow.cyan {
+  top: 25%;
+  left: 25%;
+  background-color: rgba(6, 182, 212, 0.1);
+}
+.jarvis-glow.blue {
+  bottom: 25%;
+  right: 25%;
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap");
+
+.jarvis-wrapper {
+  min-height: 100vh;
+  height: 100vh;
+  background-color: black;
+  color: hsl(180, 100%, 90%);
+  overflow: hidden;
+  position: relative;
+  font-family: "Orbitron", "Courier New", monospace;
+  letter-spacing: 0.5px;
+}
+
+.jarvis-grid-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: 0;
+  animation: grid-pulse 4s ease-in-out infinite;
+}
+
+@keyframes grid-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.jarvis-scan-lines {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 50%, rgba(6, 182, 212, 0.03) 50%);
+  background-size: 100% 4px;
+  z-index: 2;
+  animation: scan-lines 0.1s linear infinite;
+}
+
+@keyframes scan-lines {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+
+.jarvis-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.jarvis-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: hsl(180, 100%, 60%);
+  border-radius: 50%;
+  box-shadow: 0 0 6px hsl(180, 100%, 60%);
+  animation: particle-float linear infinite;
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(100vh) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) scale(1);
+    opacity: 0;
+  }
+}
+
+.jarvis-container {
+  position: relative;
+  z-index: 10;
+  height: 100vh;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.jarvis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.jarvis-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.jarvis-logo-container {
+  position: relative;
+}
+
+.jarvis-logo-circle {
+  width: 3rem;
+  height: 3rem;
+  background-color: rgba(6, 182, 212, 0.2);
+  border: 2px solid hsl(180, 100%, 60%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jarvis-logo-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: hsl(180, 100%, 60%);
+}
+
+.jarvis-logo-ring {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.jarvis-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: hsl(180, 100%, 60%);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.jarvis-title-glow {
+  color: hsl(180, 100%, 60%);
+  text-shadow: 0 0 10px hsl(180, 100%, 60%), 0 0 20px hsl(180, 100%, 60%),
+    0 0 30px hsl(180, 100%, 60%);
+  animation: title-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes title-glow {
+  from {
+    text-shadow: 0 0 10px hsl(180, 100%, 60%), 0 0 20px hsl(180, 100%, 60%),
+      0 0 30px hsl(180, 100%, 60%);
+  }
+  to {
+    text-shadow: 0 0 15px hsl(180, 100%, 60%), 0 0 25px hsl(180, 100%, 60%),
+      0 0 35px hsl(180, 100%, 60%), 0 0 45px hsl(180, 100%, 60%);
+  }
+}
+
+.jarvis-subtitle {
+  font-size: 0.875rem;
+  color: rgba(153, 246, 228, 0.7);
+}
+
+.jarvis-chat-card {
+  flex: 1;
+  background-color: rgba(0, 51, 51, 0.2);
+  border: 1px solid rgba(153, 246, 228, 0.3);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.jarvis-controls {
+  border-top: 1px solid rgba(153, 246, 228, 0.3);
+  padding-top: 1.5rem;
+}
+
+.jarvis-controls-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jarvis-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.jarvis-mic-button {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 9999px;
+  background-color: hsl(180, 100%, 40%);
+  color: white;
+  border: none;
+  transition: background-color 0.2s;
+}
+.jarvis-mic-button:hover {
+  background-color: hsl(180, 100%, 50%);
+}
+.jarvis-mic-button.jarvis-active {
+  background-color: hsl(0, 84%, 60%);
+}
+.jarvis-mic-button.jarvis-active:hover {
+  background-color: hsl(0, 84%, 70%);
+}
+
+.jarvis-speak-button {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 9999px;
+  background-color: transparent;
+  border: 1px solid hsl(180, 100%, 60%);
+  color: hsl(180, 100%, 60%);
+  transition: background-color 0.2s;
+}
+.jarvis-speak-button:hover {
+  background-color: rgba(0, 51, 51, 0.5);
+}
+.jarvis-speak-button.jarvis-speaking {
+  background-color: hsl(180, 100%, 40%);
+  color: white;
+}
+
+.jarvis-visualizer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.jarvis-status {
+  text-align: right;
+}
+.jarvis-status-main {
+  font-size: 0.875rem;
+  color: hsl(180, 100%, 80%);
+}
+.jarvis-status-sub {
+  font-size: 0.75rem;
+  color: rgba(153, 246, 228, 0.5);
+}
+
+.jarvis-glow {
+  position: absolute;
+  width: 24rem;
+  height: 24rem;
+  border-radius: 50%;
+  filter: blur(64px);
+  z-index: 0;
+  animation: glow-float 6s ease-in-out infinite;
+}
+.jarvis-glow.cyan {
+  top: 25%;
+  left: 25%;
+  background-color: rgba(6, 182, 212, 0.1);
+}
+.jarvis-glow.blue {
+  bottom: 25%;
+  right: 25%;
+  background-color: rgba(59, 130, 246, 0.1);
+  animation-delay: -2s;
+}
+
+@keyframes glow-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+} */

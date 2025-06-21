@@ -1,0 +1,74 @@
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .tools-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.tool-card {
+  background-color: rgba(8, 51, 68, 0.3); /* cyan-950/30 */
+  border: 1px solid rgba(34, 211, 238, 0.3); /* cyan-400/30 */
+  padding: 1rem;
+  transition: background-color 0.3s;
+}
+
+.tool-card:hover {
+  background-color: rgba(8, 51, 68, 0.5); /* hover:bg-cyan-950/50 */
+}
+
+.tool-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tool-icon-wrapper {
+  color: rgb(34, 211, 238); /* cyan-400 */
+}
+
+.tool-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.tool-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.tool-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(207, 250, 254); /* cyan-100 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tool-description {
+  font-size: 0.75rem;
+  color: rgba(103, 232, 249, 0.7); /* cyan-300/70 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tool-status {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+}
+
+.status-active {
+  background-color: rgb(74, 222, 128); /* green-400 */
+}
+
+.status-inactive {
+  background-color: rgb(156, 163, 175); /* gray-400 */
+}

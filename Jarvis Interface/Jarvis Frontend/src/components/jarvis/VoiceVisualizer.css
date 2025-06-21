@@ -1,0 +1,14 @@
+.voice-visualizer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.25rem;
+  height: 4rem; /* 64px (h-16) */
+  width: 8rem; /* 128px (w-32) */
+}
+
+.voice-bar {
+  background-color: rgb(34, 211, 238); /* cyan-400 */
+  width: 3px;
+  transition: all 100ms ease-out;
+}

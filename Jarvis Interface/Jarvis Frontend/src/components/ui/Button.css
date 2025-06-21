@@ -1,0 +1,100 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+.btn:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Variants */
+.btn-default {
+  background-color: hsl(180, 100%, 50%);
+  color: black;
+}
+.btn-default:hover {
+  background-color: hsl(180, 100%, 45%);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid hsl(180, 100%, 20%);
+  color: hsl(180, 100%, 90%);
+}
+.btn-outline:hover {
+  background-color: hsl(180, 100%, 15%);
+  color: white;
+}
+
+.btn-secondary {
+  background-color: hsl(180, 100%, 10%);
+  color: hsl(180, 100%, 90%);
+}
+.btn-secondary:hover {
+  background-color: hsl(180, 100%, 15%);
+}
+
+.btn-destructive {
+  background-color: hsl(0, 84%, 60%);
+  color: white;
+}
+.btn-destructive:hover {
+  background-color: hsl(0, 84%, 50%);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: hsl(180, 100%, 90%);
+}
+.btn-ghost:hover {
+  background-color: hsl(180, 100%, 15%);
+}
+
+.btn-link {
+  background: none;
+  color: hsl(180, 100%, 50%);
+  text-decoration: none;
+}
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+/* Sizes */
+.btn-default,
+.btn-sm,
+.btn-lg,
+.btn-icon {
+  height: auto;
+}
+
+.btn-default {
+  /* padding: 0.5rem 1rem; */
+}
+
+.btn-sm {
+  height: 2.25rem;
+  /* padding: 0.25rem 0.75rem; */
+  border-radius: 0.375rem;
+}
+
+.btn-lg {
+  height: 2.75rem;
+  /* padding: 0.5rem 2rem; */
+  border-radius: 0.375rem;
+}
+
+.btn-icon {
+  height: 2.5rem;
+  width: 2.5rem;
+  padding: 0;
+}

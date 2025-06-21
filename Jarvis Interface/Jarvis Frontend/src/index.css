@@ -1,0 +1,93 @@
+/* CSS Variables */
+:root {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(180, 100%, 90%);
+  --card: hsl(180, 100%, 3%);
+  --card-foreground: hsl(180, 100%, 90%);
+  --popover: hsl(180, 100%, 3%);
+  --popover-foreground: hsl(180, 100%, 90%);
+  --primary: hsl(180, 100%, 50%);
+  --primary-foreground: hsl(0, 0%, 0%);
+  --secondary: hsl(180, 100%, 10%);
+  --secondary-foreground: hsl(180, 100%, 90%);
+  --muted: hsl(180, 100%, 10%);
+  --muted-foreground: hsl(180, 100%, 60%);
+  --accent: hsl(180, 100%, 15%);
+  --accent-foreground: hsl(180, 100%, 90%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --border: hsl(180, 100%, 20%);
+  --input: hsl(180, 100%, 20%);
+  --ring: hsl(180, 100%, 50%);
+  --radius: 0.5rem;
+}
+
+/* Global element styles */
+* {
+  border-color: #e5e7eb; /* Tailwind's gray-200 */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(6, 182, 212, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.7);
+}
+
+/* Glow animations */
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.8);
+  }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.33);
+  }
+  40%,
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.33);
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
