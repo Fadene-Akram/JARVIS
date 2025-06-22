@@ -62,6 +62,7 @@ Each version has its own `README.md` with full setup instructions, but in genera
   - Gemini API (optional)  
 - 🗂️ `.env` file to store your credentials  
 - 🧪 Virtual environment recommended for Python packages
+---
 
 ## 🌟 Showcase
 
