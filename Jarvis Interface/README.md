@@ -36,13 +36,9 @@ This version of Jarvis features a **beautiful modern website interface** built w
 
 ## 🖼️ Screenshots
 
-| Dashboard                          | Voice Interaction                      |
-| ---------------------------------- | -------------------------------------- |
-| ![Dashboard](images/dashboard.png) | ![Voice](images/voice-interaction.png) |
-
-| Commands                         | Response                         |
-| -------------------------------- | -------------------------------- |
-| ![Commands](images/commands.png) | ![Response](images/response.png) |
+| Jarvis Interface                   |
+| ---------------------------------- |
+| ![Dashboard](../jarvis-interface.png) |
 
 ---
 
