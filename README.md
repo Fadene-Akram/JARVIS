@@ -31,6 +31,7 @@ A lightweight, terminal-based assistant built in Python. Perfect for voice-power
 - 🗣️ Voice command execution  
 - 📂 File-based knowledge base  
 - ⚡ Fast, portable, and easy to deploy
+  
 📖 [Go to CLI README](<./Jarvis CLI/README.md>)
 
 ### 🌐 Jarvis Interface  
