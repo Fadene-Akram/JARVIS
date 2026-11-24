@@ -1,113 +1,114 @@
+import json
+import logging
+import threading
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
-from colorama import Fore, init
+from django.conf import settings
 from litellm import completion
 
-init(autoreset=True)
+log = logging.getLogger(__name__)
+
+MAX_STEPS = 5
+MAX_HISTORY = 24
+
 
 class Agent:
-    def __init__(self, name, model, tools=None, system_prompt=""):
-        self.name = name
-        self.model = model
-        self.messages = []
-        self.tools = tools if tools is not None else []
-        self.tools_schemas = self.get_openai_tools_schema() if self.tools else None
-        self.system_prompt = system_prompt
-        if self.system_prompt and not self.messages:
-            self.handle_messages_history("system", self.system_prompt)
+    def __init__(self, name, model, tools, system_prompt, messages=None):
+        self.name, self.model = name, model
+        self.tools = {t.__name__: t for t in tools}
+        self.schemas = [
+            {"type": "function", "function": t.llm_schema()}
+            for t in self.tools.values()
+        ] or None
+        self.system_prompt = system_prompt  # must contain {now}
+        self.messages = messages or []
+        self._lock = threading.Lock()  # one conversation, one request at a time
 
-    def invoke(self, message):
-        print(Fore.GREEN + f"\nCalling Agent: {self.name}")
-        self.handle_messages_history("user", message)
-        result = self.execute()
-        return result
-
-    def execute(self):
-        response_message = self.call_llm()
-        response_content = response_message.content
-        tool_calls = response_message.tool_calls
-        if tool_calls:
+    # ------------------------------------------------------------------ public
+    def invoke(self, text: str) -> str:
+        with self._lock:
+            self.messages.append({"role": "user", "content": text})
             try:
-                response_content = self.run_tools(tool_calls)
-            except Exception as e:
-                print(Fore.RED + f"\nError: {e}\n")
-        return response_content
+                for _ in range(MAX_STEPS):
+                    msg = self._call_llm()
 
-    def run_tools(self, tool_calls):
-        for tool_call in tool_calls:
-            self.execute_tool(tool_call)
-        response_content = self.execute()
-        return response_content
+                    entry = {"role": "assistant", "content": msg.content or ""}
+                    if msg.tool_calls:
+                        entry["tool_calls"] = [
+                            {
+                                "id": c.id,
+                                "type": "function",
+                                "function": {
+                                    "name": c.function.name,
+                                    "arguments": c.function.arguments,
+                                },
+                            }
+                            for c in msg.tool_calls
+                        ]
+                    self.messages.append(entry)
 
-    def execute_tool(self, tool_call):
-        function_name = tool_call.function.name
-        func = next(
-            iter([func for func in self.tools if func.__name__ == function_name])
-        )
+                    if not msg.tool_calls:
+                        return msg.content or ""
 
-        if not func:
-            return f"Error: Function {function_name} not found. Available functions: {[func.__name__ for func in self.tools]}"
+                    for call in msg.tool_calls:
+                        self.messages.append(self._run_tool(call))
 
-        try:
-            print(Fore.GREEN + f"\nCalling Tool: {function_name}")
-            print(Fore.GREEN + f"Arguments: {tool_call.function.arguments}\n")
-            func = func(**eval(tool_call.function.arguments))
-            output = func.run()
+                return "I'm afraid that took too many steps, sir."
+            finally:
+                self._trim_history()
 
-            tool_message = {"name": function_name, "tool_call_id": tool_call.id}
-            self.handle_messages_history("tool", output, tool_output=tool_message)
+    # ----------------------------------------------------------------- private
+    def _now(self) -> str:
+        return datetime.now(ZoneInfo(settings.TIME_ZONE)).isoformat()
 
-            return output
-        except Exception as e:
-            print("Error: ", str(e))
-            return "Error: " + str(e)
-
-    def call_llm(self):
-        response = completion(
+    def _call_llm(self):
+        system = {
+            "role": "system",
+            "content": self.system_prompt.format(now=self._now()),
+        }
+        resp = completion(
             model=self.model,
-            messages=self.messages,
-            tools=self.tools_schemas,
+            messages=[system, *self._trimmed()],
+            tools=self.schemas,
             temperature=0.1,
+            timeout=30,
+            num_retries=2,
         )
-        message = response.choices[0].message
-        if message.tool_calls is None:
-            message.tool_calls = []
-        if message.function_call is None:
-            message.function_call = {}
-        self.handle_messages_history(
-            "assistant", message.content, tool_calls=message.tool_calls
-        )
-        return message
+        return resp.choices[0].message
 
-    def get_openai_tools_schema(self):
-        return [
-            {"type": "function", "function": tool.openai_schema} for tool in self.tools
-        ]
+    @staticmethod
+    def _drop_leading_orphans(msgs):
+        # never start with an assistant/tool message whose partner was cut off
+        while msgs and msgs[0]["role"] != "user":
+            msgs = msgs[1:]
+        return msgs
 
-    def reset(self):
-        self.messages = []
-        if self.system_prompt:
-            self.handle_messages_history("system", self.system_prompt)
+    def _trimmed(self):
+        return self._drop_leading_orphans(self.messages[-MAX_HISTORY:])
 
-    def handle_messages_history(self, role, content, tool_calls=None, tool_output=None):
-        message = {"role": role, "content": content}
-        if tool_calls:
-            message["tool_calls"] = self.parse_tool_calls(tool_calls)
-        if tool_output:
-            message["name"] = tool_output["name"]
-            message["tool_call_id"] = tool_output["tool_call_id"]
-        # save short-term memory
-        self.messages.append(message)
+    def _trim_history(self):
+        """Keep stored history bounded, not just what is sent to the model."""
+        self.messages = self._trimmed()
 
-    def parse_tool_calls(self, calls):
-        parsed_calls = []
-        for call in calls:
-            parsed_call = {
-                "function": {
-                    "name": call.function.name,
-                    "arguments": call.function.arguments,
-                },
-                "id": call.id,
-                "type": call.type,
-            }
-            parsed_calls.append(parsed_call)
-        return parsed_calls
+    def _run_tool(self, call):
+        name = call.function.name
+        tool_cls = self.tools.get(name)
+
+        if tool_cls is None:
+            output = f"Error: unknown tool {name}. Available: {list(self.tools)}"
+        else:
+            try:
+                args = json.loads(call.function.arguments or "{}")
+                output = tool_cls(**args).run()  # pydantic validates args
+            except Exception as e:
+                log.exception("Tool %s failed", name)
+                output = f"Error: {e}"
+
+        # ALWAYS answer the tool_call_id
+        return {
+            "role": "tool",
+            "tool_call_id": call.id,
+            "name": name,
+            "content": str(output),
+        }
