@@ -7,6 +7,7 @@ import ChatInterface from "./jarvis/ChatInterface";
 import ToolsPanel from "./jarvis/ToolsPanel";
 import SystemStatus from "./jarvis/SystemStatus";
 import "./JarvisInterface.css";
+import { apiFetch } from "../apis"; // adjust the path to where api.js lives
 
 export default function JarvisInterface() {
   const [isListening, setIsListening] = useState(false);
@@ -57,8 +58,9 @@ export default function JarvisInterface() {
   useEffect(() => {
     const initAudioContext = async () => {
       try {
-        const context = new (window.AudioContext ||
-          window.webkitAudioContext)();
+        const context = new (
+          window.AudioContext || window.webkitAudioContext
+        )();
         setAudioContext(context);
       } catch (error) {
         console.error("Error initializing audio context:", error);
@@ -217,14 +219,14 @@ export default function JarvisInterface() {
             console.error("Audio blob is empty");
             addMessage(
               "Sorry, no audio was recorded. Please try again.",
-              "assistant"
+              "assistant",
             );
           }
         } else {
           console.error("No audio chunks recorded");
           addMessage(
             "Sorry, no audio was captured. Please try again.",
-            "assistant"
+            "assistant",
           );
         }
 
@@ -244,7 +246,7 @@ export default function JarvisInterface() {
       setIsListening(false);
       addMessage(
         "Error accessing microphone. Please check permissions.",
-        "assistant"
+        "assistant",
       );
     }
   };
@@ -339,13 +341,10 @@ export default function JarvisInterface() {
       formData.append("audio", finalBlob, filename);
 
       // Send audio to Django backend for speech-to-text
-      const response = await fetch(
-        "http://localhost:8000/api/speech-to-text/",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await apiFetch("/api/speech-to-text/", {
+        method: "POST",
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -368,14 +367,14 @@ export default function JarvisInterface() {
       } else {
         addMessage(
           "Sorry, I couldn't understand that. Please try again.",
-          "assistant"
+          "assistant",
         );
       }
     } catch (error) {
       console.error("Error sending audio to backend:", error);
       addMessage(
         "Sorry, there was an error processing your audio. Please try again.",
-        "assistant"
+        "assistant",
       );
     }
   };
@@ -383,7 +382,7 @@ export default function JarvisInterface() {
   const getAssistantResponse = async (text) => {
     try {
       // Send text to Django backend for LLM processing
-      const response = await fetch("http://localhost:8000/api/assistant/", {
+      const response = await apiFetch("/api/assistant/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -405,7 +404,7 @@ export default function JarvisInterface() {
       console.error("Error getting assistant response:", error);
       addMessage(
         "Sorry, I encountered an error processing your request.",
-        "assistant"
+        "assistant",
       );
     }
     return null;
@@ -418,16 +417,13 @@ export default function JarvisInterface() {
       setIsSpeaking(true);
 
       // Request TTS from Django backend
-      const response = await fetch(
-        "http://localhost:8000/api/text-to-speech/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text }),
-        }
-      );
+      const response = await apiFetch("/api/text-to-speech/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text }),
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -456,14 +452,14 @@ export default function JarvisInterface() {
         } catch (playError) {
           if (playError.name === "NotAllowedError") {
             console.log(
-              "Audio autoplay blocked - waiting for user interaction"
+              "Audio autoplay blocked - waiting for user interaction",
             );
             setIsSpeaking(false);
             // Don't show error to user, just silently fail for autoplay
             if (!hasUserInteracted) {
               // Show a subtle message that audio will start after interaction
               console.log(
-                "Audio will be available after first user interaction"
+                "Audio will be available after first user interaction",
               );
             }
           } else {
@@ -549,8 +545,8 @@ export default function JarvisInterface() {
                   isListening
                     ? "jarvis-listening"
                     : isSpeaking
-                    ? "jarvis-speaking"
-                    : ""
+                      ? "jarvis-speaking"
+                      : ""
                 }`}
               >
                 <Cpu className="jarvis-logo-icon" />
@@ -612,8 +608,8 @@ export default function JarvisInterface() {
                     isMuted
                       ? "jarvis-muted"
                       : isSpeaking
-                      ? "jarvis-speaking jarvis-pulse-green"
-                      : ""
+                        ? "jarvis-speaking jarvis-pulse-green"
+                        : ""
                   }`}
                   disabled={isListening}
                   title={
@@ -643,18 +639,18 @@ export default function JarvisInterface() {
                   {isListening
                     ? "LISTENING..."
                     : isSpeaking
-                    ? "SPEAKING..."
-                    : isMuted
-                    ? "READY (MUTED)"
-                    : "READY"}
+                      ? "SPEAKING..."
+                      : isMuted
+                        ? "READY (MUTED)"
+                        : "READY"}
                 </p>
                 <p className="jarvis-status-sub">
                   {currentInput ||
                     (isMuted
                       ? "Voice responses disabled"
                       : !hasUserInteracted
-                      ? "Click anywhere to enable audio"
-                      : "Awaiting command")}
+                        ? "Click anywhere to enable audio"
+                        : "Awaiting command")}
                 </p>
               </div>
             </div>
