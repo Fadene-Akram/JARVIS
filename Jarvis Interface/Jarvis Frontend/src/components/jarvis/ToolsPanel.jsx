@@ -1,57 +1,3 @@
-// import { Calendar, Users, Mail, Search } from "lucide-react";
-// import { Card } from "../ui/Card";
-// import "./ToolsPanel.css"; // CSS file
-
-// export default function ToolsPanel() {
-//   const tools = [
-//     {
-//       name: "Calendar",
-//       icon: <Calendar className="tool-icon" />,
-//       status: "active",
-//       description: "Schedule management",
-//     },
-//     {
-//       name: "Contacts",
-//       icon: <Users className="tool-icon" />,
-//       status: "active",
-//       description: "Contact management",
-//     },
-//     {
-//       name: "Email",
-//       icon: <Mail className="tool-icon" />,
-//       status: "active",
-//       description: "Email operations",
-//     },
-//     {
-//       name: "Web Search",
-//       icon: <Search className="tool-icon" />,
-//       status: "active",
-//       description: "Information retrieval",
-//     },
-//   ];
-
-//   return (
-//     <div className="tools-grid">
-//       {tools.map((tool) => (
-//         <Card key={tool.name} className="tool-card">
-//           <div className="tool-item">
-//             <div className="tool-icon-wrapper">{tool.icon}</div>
-//             <div className="tool-text">
-//               <p className="tool-name">{tool.name}</p>
-//               <p className="tool-description">{tool.description}</p>
-//             </div>
-//             <div
-//               className={`tool-status ${
-//                 tool.status === "active" ? "status-active" : "status-inactive"
-//               }`}
-//             />
-//           </div>
-//         </Card>
-//       ))}
-//     </div>
-//   );
-// }
-
 import { useMemo } from "react";
 import { GROUPS, metaFor } from "./tools";
 
@@ -72,47 +18,55 @@ export default function ToolsPanel({ activeTools, messages }) {
   }, [messages]);
 
   return (
-    <div className="grid shrink-0 grid-cols-2 gap-3 md:grid-cols-5">
+    <div className="hud-scroll flex gap-3 overflow-x-auto lg:flex-col lg:overflow-visible">
+      <p className="hidden px-1 font-hud text-[10px] font-bold tracking-[0.25em] text-cyan-500 lg:block">
+        SUBSYSTEMS
+      </p>
       {GROUPS.map(({ key, label, desc, Icon }) => {
         const active = running.has(key);
         return (
           <div
             key={key}
-            className={`relative flex items-center gap-3 rounded-xl border p-3 backdrop-blur transition-all duration-300 ${
+            className={`flex min-w-[11rem] flex-col gap-1.5 rounded-xl border p-3 backdrop-blur transition-all duration-300 lg:min-w-0 ${
               active
-                ? "border-amber-400 bg-amber-400/10 shadow-[0_0_25px_rgba(251,191,36,0.45)]"
-                : "border-cyan-500/30 bg-cyan-950/30"
+                ? "border-amber-400 bg-amber-400/10 shadow-[0_0_25px_rgba(251,191,36,0.4)]"
+                : "border-cyan-500/25 bg-cyan-950/30"
             }`}
           >
-            <div
-              className={`rounded-lg p-2 ${
-                active
-                  ? "bg-amber-400/20 text-amber-300"
-                  : "bg-cyan-500/10 text-cyan-300"
-              }`}
-            >
-              <Icon className={`h-5 w-5 ${active ? "animate-pulse" : ""}`} />
-            </div>
-            <div className="min-w-0">
-              <p className="truncate text-xs font-bold tracking-wider">
+            <div className="flex items-center gap-2.5">
+              <div
+                className={`rounded-lg p-1.5 ${
+                  active
+                    ? "bg-amber-400/20 text-amber-300"
+                    : "bg-cyan-500/10 text-cyan-300"
+                }`}
+              >
+                <Icon className={`h-4 w-4 ${active ? "animate-pulse" : ""}`} />
+              </div>
+              <p className="flex-1 truncate font-hud text-xs font-bold tracking-wider">
                 {label}
               </p>
-              <p
-                className={`truncate text-[10px] ${active ? "text-amber-300" : "text-cyan-500"}`}
-              >
-                {active ? "RUNNING…" : desc}
-              </p>
-            </div>
-            {counts[key] > 0 && (
-              <span className="absolute right-2 top-1.5 text-[10px] text-cyan-400/70">
-                ×{counts[key]}
+              <span className="relative flex h-2 w-2">
+                {active && (
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
+                )}
+                <span
+                  className={`relative inline-flex h-2 w-2 rounded-full ${
+                    active ? "bg-amber-400" : "bg-emerald-400"
+                  }`}
+                />
               </span>
-            )}
-            <span
-              className={`absolute bottom-2 right-2 h-2 w-2 rounded-full ${
-                active ? "animate-ping bg-amber-400" : "bg-emerald-400"
-              }`}
-            />
+            </div>
+            <div className="flex items-center justify-between pl-0.5 text-xs">
+              <span className={active ? "text-amber-300" : "text-cyan-500"}>
+                {active ? "Running…" : desc}
+              </span>
+              {counts[key] > 0 && (
+                <span className="tabular-nums text-cyan-400/60">
+                  {counts[key]} used
+                </span>
+              )}
+            </div>
           </div>
         );
       })}

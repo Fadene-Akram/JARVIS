@@ -1,25 +1,10 @@
 import { Calendar, Users, Mail, Search, BookOpen } from "lucide-react";
 
 export const GROUPS = [
-  {
-    key: "calendar",
-    label: "Calendar",
-    desc: "Schedule management",
-    Icon: Calendar,
-  },
-  {
-    key: "contacts",
-    label: "Contacts",
-    desc: "Contact management",
-    Icon: Users,
-  },
-  { key: "email", label: "Email", desc: "Email operations", Icon: Mail },
-  {
-    key: "search",
-    label: "Web Search",
-    desc: "Information retrieval",
-    Icon: Search,
-  },
+  { key: "calendar", label: "Calendar", desc: "Schedule", Icon: Calendar },
+  { key: "contacts", label: "Contacts", desc: "People", Icon: Users },
+  { key: "email", label: "Email", desc: "Messages", Icon: Mail },
+  { key: "search", label: "Web Search", desc: "Internet", Icon: Search },
   { key: "knowledge", label: "Knowledge", desc: "Your notes", Icon: BookOpen },
 ];
 
